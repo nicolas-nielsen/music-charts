@@ -2,6 +2,7 @@ import {
   LastfmError,
   UserTopArtists,
   ApiMethods,
+  Artist,
 } from '@Application/src/repositories/lastfm/types';
 
 const format = 'json';
@@ -26,7 +27,7 @@ export const lastfmRepository = {
     }
   },
 
-  async getArtistDetail(mbid: string): Promise<Response> {
+  async getArtistDetail(mbid: string): Promise<Artist> {
     const searchParams: URLSearchParams = this._getSearchParams({
       method: ApiMethods.ArtistGetInfos,
       mbid,
@@ -34,11 +35,9 @@ export const lastfmRepository = {
     const response: Response = await fetch(
       `${endpoint}?${searchParams.toString()}`,
     );
-    const body = await response.json();
-    if (body.error) {
-      const bodyError: LastfmError = body;
-
-      throw this._formatError(response, bodyError);
+    const body: { artist: Artist } | LastfmError = await response.json();
+    if ('message' in body) {
+      throw this._formatError(response, body);
     } else {
       return body.artist;
     }

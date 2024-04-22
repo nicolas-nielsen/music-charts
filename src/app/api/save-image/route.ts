@@ -5,13 +5,13 @@ import { constants } from 'http2';
 
 const publicFolder = process.env.publicFolder;
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   const body = await request.json();
   const { url, file } = body;
 
   try {
-    const response = await fetch(url);
-    const buffer = Buffer.from(await response.arrayBuffer());
+    const response: Response = await fetch(url);
+    const buffer: Buffer = Buffer.from(await response.arrayBuffer());
     fs.writeFile(path.join(publicFolder, file), buffer, (err) => {
       console.error(err?.message);
     });

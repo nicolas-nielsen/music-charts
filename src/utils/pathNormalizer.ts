@@ -6,8 +6,8 @@ export const getArtistImagePath = (
   name: string,
   isRelative: boolean = false,
   extension: string = '.jpg',
-) => {
-  const artistFileName = name.toLowerCase().replace(/\s/g, '_');
+): string => {
+  const artistFileName: string = name.toLowerCase().replace(/\s/g, '_');
 
   return path
     .join(

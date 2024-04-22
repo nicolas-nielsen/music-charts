@@ -9,9 +9,10 @@ import path from 'path';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getArtistImagePath } from '@Application/src/utils/pathNormalizer';
+import { Artist } from '@Application/src/repositories/lastfm/types';
 
 export default async function Page({ params, searchParams }) {
-  let artist;
+  let artist: Artist;
   try {
     artist = await lastfmRepository.getArtistDetail(params.mbid);
   } catch (e) {

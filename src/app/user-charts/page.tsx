@@ -17,7 +17,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
 
   const searchParams = useSearchParams();
-  const userQueryParam = searchParams.get('user');
+  const userQueryParam: string = searchParams.get('user');
   if (userQueryParam && user !== userQueryParam) {
     setUser(() => userQueryParam);
   }
